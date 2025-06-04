@@ -1,0 +1,15 @@
+---
+- name: Escuchar webhook y mostrar el evento
+  hosts: localhost
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+  rules:
+    - name: Mostrar todo lo recibido
+      condition: event is defined
+      action:
+        debug:
+          msg: |
+            Recibí un evento por webhook:
+            {{ event | to_nice_json }}
